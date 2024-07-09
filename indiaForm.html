@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<style>
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #4d3213;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+body{
+    background: linear-gradient(to right,#c1a18b, #b48877, #896851,#6a4d39, #5c412e);
+    color: aliceblue;
+}
+input[type=submit] {
+  width: 100%;
+  background-color: #8f6d46;
+  color: #d8b48a;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #422e18;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #372716;
+  padding: 20px;
+}
+
+  body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header{
+      background-color:#32251f;
+      color: #EBD2BC;
+      padding: 20px;
+      text-align: center;
+  }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      border: 1px solid #5b2c05;
+      border-radius: 5px;
+    }
+    
+    textarea {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    
+    button {
+      padding: 10px 20px;
+      background-color: #3e1e08;
+      color: #dcae94c5;
+      border: none;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background-color: #70441a;
+    }
+    .bts{
+      background: linear-gradient(to right,#c1a18b, #b48877, #896851,#6a4d39, #5c412e);
+    }
+    .comment {
+      margin-bottom: 10px;
+      color: #c1a18b;
+      padding: 10px;
+      background-color: #2e1904;
+      border-radius: 5px;
+    }
+    .bby{
+      height: 400vh;
+    }
+    ::-webkit-scrollbar{
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track{
+      background-color: rgb(225, 170, 136);
+    }
+    ::-webkit-scrollbar-thumb{
+      background-color: #32251f;
+    }
+</style>
+<body>
+
+<h3>Can you give your time here! Please!!!!</h3>
+
+<div>
+  <form method="POST" name="google-sheet" >
+    <label for="fname">First Name</label>
+    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+
+    <label for="lname">Last Name</label>
+    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+    <label for="email">Email</label>
+    <input type="text" id="lname" name="Email" placeholder="Your Email..">
+
+    <label for="Cname">Country Name</label>
+    <input type="text" id="Cname" name="countryname" placeholder="Your country name..">
+
+    <input type="submit" value="Submit" name="submit">
+  </form>
+</div>
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbz5JTDHUiMtshOOdbm-AZl0KlJyDhWtIAx48lipVrqJ-VanaVNbN25WzG3ufi_O7F0G/exec'
+  const form = document.forms['google-sheet']
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => alert("Thanks for Contacting us..! We Will Contact You Soon..."))
+      .catch(error => console.error('Error!', error.message))
+  })
+</script>
+
+  <script>
+  
+    let comments = [];
+
+    function postComment() {
+      const commentText = document.getElementById('commentInput').value.trim();
+      if (commentText === '') {
+        alert('Please enter a comment');
+        return;
+      }
+      const comment = {
+        text: commentText,
+        timestamp: new Date()
+      };
+      comments.push(comment);
+      displayComments();
+      document.getElementById('commentInput').value = '';
+    }
+    
+    function displayComments() {
+      const commentList = document.getElementById('commentList');
+      commentList.innerHTML = '';
+      comments.forEach(comment => {
+        const commentDiv = document.createElement('div');
+        commentDiv.classList.add('comment');
+        commentDiv.textContent = `${comment.text} - ${formatDate(comment.timestamp)}`;
+        commentList.appendChild(commentDiv);
+      });
+    }
+    
+    function formatDate(date) {
+      const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+      return new Intl.DateTimeFormat('en-US', options).format(date);
+    }
+    
+    // Initial display
+    displayComments();
+    
+  </script>
+  </head>
+  <br><br>
+  <header>
+    <h1>Your POV is highly Appreciated</h1>
+  </header>
+<body class="bts">
+  <div class="container">
+    <h1>Comment Section</h1>
+    <div id="comments">
+      <textarea id="commentInput" placeholder="Write your comment here..."></textarea>
+      <button onclick="postComment()">Post Comment</button>
+      <div id="commentList"></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <div class="bby"></div>
+</body>
+</html>
